@@ -99,14 +99,19 @@ jobs:
           -DSKIA_DIR=skia \
           -DSKIA_LIBRARY_DIR=skia/out/Release-$skia_arch
     - name: Compiling
-      shell: bash
+      if: runner.os == 'Windows'
+      shell: pwsh
       run: |
-        cd build && ninja
-    - uses: actions/upload-artifact@v2
+        cd build
+        ninja
+    - name: Upload Aseprite Artifact
+      uses: actions/upload-artifact@v3.1.3
       with:
         name: aseprite
         path: |
-          D:/a/aseprite/aseprite/build/bin/data
-          D:/a/aseprite/aseprite/build/bin/aseprite.exe
+          build/bin/data
+          build/bin/aseprite.exe
+
+
 
 
